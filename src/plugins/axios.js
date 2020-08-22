@@ -9,6 +9,8 @@ import axios from 'axios'
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const config = {
+  baseURL: '/api',
+  timeout: 8000
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
@@ -30,8 +32,14 @@ _axios.interceptors.request.use(
 // Add a response interceptor
 _axios.interceptors.response.use(
   function (response) {
-    // Do something with response data
-    return response
+    const res = response.data
+    if (res.status === 0) {
+      return res.data
+    } else if (res.status === 10) {
+      window.location.href = '/#/login'
+    } else {
+      alert(res.msg)
+    }
   },
   function (error) {
     // Do something with response error
