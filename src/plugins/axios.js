@@ -7,9 +7,12 @@ import axios from 'axios'
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
+// const mock = true
+// if (mock) {
+//   require('./mock/api')
+// }
 const config = {
-  baseURL: '/api',
+  baseURL: '',
   timeout: 8000
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   // timeout: 60 * 1000, // Timeout

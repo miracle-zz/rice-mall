@@ -20,5 +20,14 @@ module.exports = {
   productionSourceMap: true,
   chainWebpack: (config) => {
     config.plugins.delete('prefetch')
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        assets: '@/assets',
+        components: '@/components',
+        views: '@/views'
+      }
+    }
   }
 }
