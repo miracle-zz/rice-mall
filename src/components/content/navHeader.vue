@@ -9,9 +9,11 @@
           <a href="javascript:;">协议规则</a>
         </div>
         <div class="topbar-user">
-          <a href="javascript:;">登录</a>
-          <a href="javascript:;">注册</a>
-          <a href="javascript:;" class="my-cart">
+          <a href="javascript:;" v-if="username">{{username}}</a>
+          <a href="javascript:;" v-if="!username" @click="login">登录</a>
+
+          <a href="javascript:;" v-if="username">我的订单</a>
+          <a href="javascript:;" class="my-cart" @click="goToCart">
             <span class="icon-cart"></span>购物车
           </a>
         </div>
@@ -27,13 +29,13 @@
             <span>小米手机</span>
             <div class="children">
               <ul>
-                <li class="product">
-                  <a href target="_blank">
+                <li class="product" v-for="(item,index) in phoneList" :key="index">
+                  <a :href="'/#/product/'+item.id" target="_blank">
                     <div class="pro-img">
-                      <img src alt />
+                      <img :src="item.mainImage" alt />
                     </div>
-                    <div class="pro-name">小米cc9</div>
-                    <div class="pro-price">1799</div>
+                    <div class="pro-name">{{item.name}}</div>
+                    <div class="pro-price">{{item.price | currency}}</div>
                   </a>
                 </li>
               </ul>
@@ -66,19 +68,37 @@ export default {
   data () {
     return {
       username: 'jack',
-      phoneList: [],
-      categoryId: 100012
+      phoneList: []
+      // categoryId: 100012,
+      // pageSize: 6
+    }
+  },
+  filters: {
+    currency (val) {
+      if (!val) return '0.00'
+      return '￥' + val.toFixed(2) + '元'
     }
   },
   mounted () {
-    getProductList(this.categoryId).then(res => {
-      this.phoneList = res.list
-    })
+    this.getProductList1(100012, 6)
+  },
+  methods: {
+    getProductList1 (categoryId, pageSize) {
+      getProductList(categoryId, pageSize).then(res => {
+        this.phoneList = res.list
+      })
+    },
+    goToCart () {
+      this.$router.push('/cart')
+    },
+    login () {
+      this.$router.push('/login')
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 @import 'assets/scss/base.scss';
 @import 'assets/scss/mixin.scss';
 @import 'assets/scss/config.scss';
@@ -157,6 +177,7 @@ export default {
             .children {
               height: 220px;
               opacity: 1;
+              background: white;
             }
           }
           .children {
