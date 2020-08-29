@@ -67,7 +67,7 @@ export default {
   name: 'navHeader',
   data () {
     return {
-      username: 'jack',
+      username: '',
       phoneList: []
       // categoryId: 100012,
       // pageSize: 6
@@ -121,6 +121,7 @@ export default {
         text-align: center;
         background-color: #ff6600;
         color: #ffffff;
+        margin-right: 0;
         .icon-cart {
           @include bgImg(16px, 12px, '/imgs/icon-cart-checked.png');
           margin-right: 4px;
