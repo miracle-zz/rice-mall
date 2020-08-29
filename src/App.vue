@@ -20,12 +20,14 @@ export default {
   },
   methods: {
     getUser () {
-      getUser().then(() => {
+      getUser().then((res) => {
+        this.$store.dispatch('saveUserName', res.username)
         // 保存到vuex内
       })
     },
     getCartCount () {
-      getCartCount().then(() => {
+      getCartCount().then((res) => {
+        this.$store.dispatch('saveCartCount', res)
         // 保存到vuex内
       })
     }

@@ -51,7 +51,9 @@ export default {
     login () {
       const { username, password } = this
       login1(username, password).then(res => {
+        // console.log(res.username)
         this.$cookie.set('userId', res.id, { expires: '1M' })
+        this.$store.dispatch('saveUserName', res.username)
         this.$router.push('/index')
       })
     },
